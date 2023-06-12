@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import pl.training.payments.application.services.PaymentService;
 
 @RequiredArgsConstructor
-public class ChargeCardHandler {
+public class ChargeCardCommandHandler {
 
     private final PaymentService paymentService;
 
-    public void handle(ChargeCard chargeCard) {
-        paymentService.chargeCard(chargeCard.number(), chargeCard.amount());
+    public void handle(ChargeCardCommand chargeCardCommand) {
+        paymentService.chargeCard(chargeCardCommand.number(), chargeCardCommand.amount());
     }
 
 }

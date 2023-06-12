@@ -2,13 +2,13 @@ package pl.training.payments.domain;
 
 import pl.training.payments.domain.common.Entity;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
+import static java.util.Collections.unmodifiableList;
 import static pl.training.payments.domain.TransactionType.FEE;
 
 public class Card implements Entity {
@@ -22,6 +22,17 @@ public class Card implements Entity {
     private List<CardTransaction> transactions;
     private Queue<CardCharged> events;
 
+    public Card(CardId id, String owner, CardNumber number, CardVerificationValue cvv, LocalDate expirationDate, Money balance, List<CardTransaction> transactions, Queue<CardCharged> events) {
+        this.id = id;
+        this.owner = owner;
+        this.number = number;
+        this.cvv = cvv;
+        this.expirationDate = expirationDate;
+        this.balance = balance;
+        this.transactions = transactions;
+        this.events = events;
+    }
+
     public void addTransaction(CardTransaction transaction) {
         if (!CardNotExpired.create(transaction.getDate(), expirationDate).check()) {
             throw new CardExpiredException();
@@ -31,6 +42,10 @@ public class Card implements Entity {
         }
         transactions.add(transaction);
         publishCardChargeEvent(transaction);
+    }
+
+    public List<CardTransaction> getTransactions() {
+        return unmodifiableList(transactions);
     }
 
     private void publishCardChargeEvent(CardTransaction transaction) {

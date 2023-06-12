@@ -6,6 +6,8 @@ import pl.training.payments.application.output.events.CardEventsPublisher;
 import pl.training.payments.application.output.time.TimeProvider;
 import pl.training.payments.domain.*;
 
+import java.util.List;
+
 import static pl.training.payments.domain.TransactionType.WITHDRAW;
 
 @RequiredArgsConstructor
@@ -24,6 +26,12 @@ public class PaymentService {
         publishEvents(card);
     }
 
+    public List<CardTransaction> getTransactions(CardNumber number) {
+        return cardRepository.getByNumber(number)
+                .map(Card::getTransactions)
+                .orElseThrow(CardNotFoundException::new);
+    }
+
     public void chargeFees(CardNumber number) {
         var card = cardRepository.getByNumber(number)
                 .orElseThrow(CardNotFoundException::new);
@@ -37,6 +45,7 @@ public class PaymentService {
                 .stream()
                 .map(this::toEvent)
                 .forEach(cardEventsPublisher::publish);
+        card.getEvents().clear();
     }
 
     private CardChargedEvent toEvent(CardCharged cardCharged) {

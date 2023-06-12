@@ -8,14 +8,14 @@ import pl.training.payments.domain.*;
 
 import java.util.List;
 
-import static pl.training.payments.domain.TransactionType.WITHDRAW;
+import static pl.training.payments.domain.CardTransactionType.WITHDRAW;
 
 @RequiredArgsConstructor
 public class PaymentService {
 
     private final CardRepository cardRepository;
-    private final TimeProvider timeProvider;
     private final CardEventsPublisher cardEventsPublisher;
+    private final TimeProvider timeProvider;
 
     public void chargeCard(CardNumber number, Money amount) {
         var card = cardRepository.getByNumber(number)
@@ -23,7 +23,7 @@ public class PaymentService {
         var transaction = new CardTransaction(timeProvider.getTimeStamp(), amount, WITHDRAW);
         card.addTransaction(transaction);
         cardRepository.save(card);
-        publishEvents(card);
+        publishCardEvents(card);
     }
 
     public List<CardTransaction> getTransactions(CardNumber number) {
@@ -37,10 +37,10 @@ public class PaymentService {
                 .orElseThrow(CardNotFoundException::new);
         card.chargeFees(timeProvider.getTimeStamp());
         cardRepository.save(card);
-        publishEvents(card);
+        publishCardEvents(card);
     }
 
-    private void publishEvents(Card card) {
+    private void publishCardEvents(Card card) {
         card.getEvents()
                 .stream()
                 .map(this::toEvent)

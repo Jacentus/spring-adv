@@ -1,8 +1,7 @@
 package pl.training.payments.domain;
 
-public enum TransactionType {
+public enum CardTransactionType {
 
-    DEPOSIT,
     WITHDRAW,
     FEE
 

@@ -6,20 +6,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.training.payments.application.input.commands.ChargeCardCommandHandler;
+import pl.training.payments.application.input.commands.ChargeCardFeesCommandHandler;
 
 @RestController
 @RequestMapping("cards")
 @RequiredArgsConstructor
-public class CardChargesController {
+public class CardFeesController {
 
-    private final ChargeCardCommandHandler chargeCardCommandHandler;
+    private final ChargeCardFeesCommandHandler chargeCardFeesCommandHandler;
     private final RestPaymentMapper mapper;
 
-    @PostMapping("charges")
-    public ResponseEntity<Void> chargeCard(@RequestBody ChargeRequestDto chargeRequestDto) {
-        var chargeCardCommand = mapper.toDomain(chargeRequestDto);
-        chargeCardCommandHandler.handle(chargeCardCommand);
+    @PostMapping("fees")
+    public ResponseEntity<Void> chargeCardFees(@RequestBody ChargeFeesDto chargeFeesDto) {
+        var chargeCardCommand = mapper.toDomain(chargeFeesDto);
+        chargeCardFeesCommandHandler.handle(chargeCardCommand);
         return ResponseEntity.noContent().build();
     }
 

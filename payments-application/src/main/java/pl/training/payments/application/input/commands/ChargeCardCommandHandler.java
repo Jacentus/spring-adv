@@ -9,7 +9,9 @@ public class ChargeCardCommandHandler {
     private final PaymentService paymentService;
 
     public void handle(ChargeCardCommand chargeCardCommand) {
-        paymentService.chargeCard(chargeCardCommand.number(), chargeCardCommand.amount());
+        var cardNumber = chargeCardCommand.number();
+        var money = chargeCardCommand.amount();
+        paymentService.chargeCard(cardNumber, money);
     }
 
 }

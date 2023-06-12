@@ -10,6 +10,16 @@ Accept: application/json
 
 ###
 
+POST http://localhost:8080/cards/fees
+Content-Type: application/json
+Accept: application/json
+
+{
+  "cardNumber": "1234567890123456"
+}
+
+###
+
 GET http://localhost:8080/cards/1234567890123456/transactions
 Content-Type: application/json
 Accept: application/json

@@ -18,7 +18,7 @@ public class HasSufficientFunds implements Specification {
 
     @Override
     public boolean check() {
-        return balance.amount().isGreaterOrEqual(transaction.money().amount());
+        return balance.isGreaterOrEqual(transaction.money());
     }
 
 }

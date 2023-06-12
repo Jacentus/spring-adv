@@ -7,12 +7,13 @@ import pl.training.payments.domain.CardTransaction;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class GetTransactionsQueryHandler {
+public class GetCardTransactionsQueryHandler {
 
     private final PaymentService paymentService;
 
-    public List<CardTransaction> handle(GetTransactionsQuery getTransactionsQuery) {
-        return paymentService.getTransactions(getTransactionsQuery.number());
+    public List<CardTransaction> handle(GetCardTransactionsQuery getCardTransactionsQuery) {
+        var cardNumber = getCardTransactionsQuery.number();
+        return paymentService.getTransactions(cardNumber);
     }
 
 }

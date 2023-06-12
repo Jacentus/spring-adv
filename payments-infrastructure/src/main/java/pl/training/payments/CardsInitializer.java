@@ -6,9 +6,7 @@ import org.springframework.stereotype.Component;
 import pl.training.payments.domain.CardFactory;
 import pl.training.payments.domain.CardRepository;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -16,12 +14,13 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @RequiredArgsConstructor
 public class CardsInitializer {
 
+    private final CardFactory cardFactory = new CardFactory();
     private final CardRepository cardRepository;
 
     @PostConstruct
     public void init() {
-        var cardFactory = new CardFactory();
-        var card = cardFactory.create("Jan Kowalski", "1234567890123456", "133", LocalDate.now().plus(1, DAYS), BigDecimal.valueOf(10_000));
+        var expirationDate =  LocalDate.now().plus(1, DAYS);
+        var card = cardFactory.create("Jan Kowalski", "1234567890123456", "133", expirationDate, 10_000);
         cardRepository.save(card);
     }
 

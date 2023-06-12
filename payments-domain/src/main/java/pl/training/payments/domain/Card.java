@@ -4,29 +4,28 @@ import pl.training.payments.domain.common.Entity;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
 import static java.util.Collections.unmodifiableList;
-import static pl.training.payments.domain.TransactionType.FEE;
+import static pl.training.payments.domain.CardTransactionType.FEE;
 
 public class Card implements Entity {
 
     private CardId id;
     private String owner;
     private CardNumber number;
-    private CardVerificationValue cvv;
+    private CardVerificationCode cvc;
     private LocalDate expirationDate;
     private Money balance;
     private List<CardTransaction> transactions;
     private Queue<CardCharged> events;
 
-    public Card(CardId id, String owner, CardNumber number, CardVerificationValue cvv, LocalDate expirationDate, Money balance, List<CardTransaction> transactions, Queue<CardCharged> events) {
+    public Card(CardId id, String owner, CardNumber number, CardVerificationCode cvc, LocalDate expirationDate, Money balance, List<CardTransaction> transactions, Queue<CardCharged> events) {
         this.id = id;
         this.owner = owner;
         this.number = number;
-        this.cvv = cvv;
+        this.cvc = cvc;
         this.expirationDate = expirationDate;
         this.balance = balance;
         this.transactions = transactions;
@@ -37,7 +36,7 @@ public class Card implements Entity {
         if (!CardNotExpired.create(transaction.getDate(), expirationDate).check()) {
             throw new CardExpiredException();
         }
-        if (!transaction.isFee() && !HasSufficientFunds.create(balance, transaction).check()) {
+        if (transaction.isWithdraw() && !HasSufficientFunds.create(balance, transaction).check()) {
             throw new InsufficientFundsException();
         }
         transactions.add(transaction);
@@ -54,7 +53,7 @@ public class Card implements Entity {
     }
 
     public void chargeFees(ZonedDateTime timestamp) {
-        var fees = new TransactionBasedFees(transactions).execute();
+        var fees = new CardTransactionBasedFees(transactions).execute();
         var transaction = new CardTransaction(timestamp, fees, FEE);
         addTransaction(transaction);
     }

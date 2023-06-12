@@ -18,7 +18,7 @@ public class Card implements Entity {
     private CardNumber number;
     private CardVerificationValue cvv;
     private LocalDate expirationDate;
-    private MonetaryAmount balance;
+    private Money balance;
     private List<CardTransaction> transactions;
     private Queue<CardCharged> events;
 
@@ -46,6 +46,10 @@ public class Card implements Entity {
 
     public Queue<CardCharged> getEvents() {
         return events;
+    }
+
+    public CardNumber getNumber() {
+        return number;
     }
 
 }

@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 
 import static pl.training.payments.domain.TransactionType.FEE;
 
-public record CardTransaction(ZonedDateTime timestamp, MonetaryAmount amount, TransactionType type) implements ValueObject {
+public record CardTransaction(ZonedDateTime timestamp, Money money, TransactionType type) implements ValueObject {
 
     public LocalDate getDate() {
         return timestamp.toLocalDate();

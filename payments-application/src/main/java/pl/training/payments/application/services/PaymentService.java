@@ -15,7 +15,7 @@ public class PaymentService {
     private final TimeProvider timeProvider;
     private final CardEventsPublisher cardEventsPublisher;
 
-    public void chargeCard(CardNumber number, MonetaryAmount amount) {
+    public void chargeCard(CardNumber number, Money amount) {
         var card = cardRepository.getByNumber(number)
                 .orElseThrow(CardNotFoundException::new);
         var transaction = new CardTransaction(timeProvider.getTimeStamp(), amount, WITHDRAW);

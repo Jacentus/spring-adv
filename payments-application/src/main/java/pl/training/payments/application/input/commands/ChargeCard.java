@@ -1,7 +1,7 @@
 package pl.training.payments.application.input.commands;
 
 import pl.training.payments.domain.CardNumber;
-import pl.training.payments.domain.MonetaryAmount;
+import pl.training.payments.domain.Money;
 
-public record ChargeCard(CardNumber number, MonetaryAmount amount) {
+public record ChargeCard(CardNumber number, Money amount) {
 }

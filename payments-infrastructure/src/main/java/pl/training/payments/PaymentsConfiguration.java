@@ -2,7 +2,8 @@ package pl.training.payments;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.training.payments.application.input.commands.ChargeCardHandler;
+import pl.training.payments.application.input.commands.ChargeCardCommandHandler;
+import pl.training.payments.application.input.queries.GetTransactionsQueryHandler;
 import pl.training.payments.application.output.events.CardEventsPublisher;
 import pl.training.payments.application.output.time.TimeProvider;
 import pl.training.payments.application.services.PaymentService;
@@ -17,8 +18,13 @@ public class PaymentsConfiguration {
     }
 
     @Bean
-    public ChargeCardHandler chargeCardHandler(PaymentService paymentService) {
-        return new ChargeCardHandler(paymentService);
+    public ChargeCardCommandHandler chargeCardCommandHandler(PaymentService paymentService) {
+        return new ChargeCardCommandHandler(paymentService);
+    }
+
+    @Bean
+    public GetTransactionsQueryHandler getTransactionsQueryHandler(PaymentService paymentService) {
+        return new GetTransactionsQueryHandler(paymentService);
     }
 
 }

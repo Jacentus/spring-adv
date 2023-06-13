@@ -3,7 +3,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "cardNumber": "1234567890123456",
+  "cardNumber": "123456789",
   "amount": 10,
   "currencyCode": "PLN"
 }

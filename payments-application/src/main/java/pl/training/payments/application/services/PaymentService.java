@@ -10,6 +10,7 @@ import java.util.List;
 
 import static pl.training.payments.domain.CardTransactionType.WITHDRAW;
 
+// w przyszłości trzeba będzie rozdzielić tą klasę na wiele serwiswów/use casów
 @RequiredArgsConstructor
 public class PaymentService {
 

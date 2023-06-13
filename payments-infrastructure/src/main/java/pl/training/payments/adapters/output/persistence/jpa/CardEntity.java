@@ -9,10 +9,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@NamedQuery(name = CardEntity.GET_WITH_ZERO_BALANCE, query = "select c from Card c where c.balance = 0")
 @Entity(name = "Card")
 @Getter
 @Setter
 public class CardEntity {
+
+    public static final String GET_WITH_ZERO_BALANCE = "CardEntity.GET_WITH_ZERO_BALANCE";
 
     @Id
     private String id;

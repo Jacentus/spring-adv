@@ -23,7 +23,7 @@ import pl.training.payments.domain.CardRepository;
 
 import java.lang.reflect.Method;
 
-@EnableJpaRepositories
+@EnableJpaRepositories//(repositoryImplementationPostfix = "Custom")
 @EnableTransactionManagement//(order = Integer.MIN_VALUE)
 @EnableAspectJAutoProxy
 @Configuration

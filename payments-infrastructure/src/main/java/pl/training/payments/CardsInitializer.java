@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class CardsInitializer {
 

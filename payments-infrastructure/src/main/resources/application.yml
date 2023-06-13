@@ -3,3 +3,4 @@ spring:
     open-in-view: false
   messages:
     basename: exceptions
+loggerOrder: 10000

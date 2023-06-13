@@ -1,5 +1,6 @@
 package pl.training.payments.adapters.input.rest;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class CardChargesController {
     private final RestPaymentMapper mapper;
 
     @PostMapping("charges")
-    public ResponseEntity<Void> chargeCard(@RequestBody ChargeRequestDto chargeRequestDto) {
+    public ResponseEntity<Void> chargeCard(@Valid @RequestBody ChargeRequestDto chargeRequestDto) {
         var chargeCardCommand = mapper.toDomain(chargeRequestDto);
         chargeCardCommandHandler.handle(chargeCardCommand);
         return ResponseEntity.noContent().build();

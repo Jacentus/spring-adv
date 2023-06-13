@@ -8,12 +8,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import pl.training.payments.commons.data.validation.ValidationExceptionMapper;
 
 import java.util.Locale;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Log
 @ControllerAdvice(annotations = RestController.class)
@@ -25,7 +21,6 @@ public class GlobalRestExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionDto> onException(Exception exception, Locale locale) {
-        log.warning("Exception: " + exception.getClass().getName());
         return responseBuilder.build(exception, HttpStatus.INTERNAL_SERVER_ERROR, locale);
     }
 

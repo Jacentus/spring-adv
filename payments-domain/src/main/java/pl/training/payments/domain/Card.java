@@ -20,6 +20,7 @@ public class Card implements Entity {
     private Money balance;
     private List<CardTransaction> transactions;
     private Queue<CardCharged> events;
+    private long version;
 
     public Card(CardId id, String owner, CardNumber number, CardVerificationCode cvc, LocalDate expirationDate, Money balance, List<CardTransaction> transactions, Queue<CardCharged> events) {
         this.id = id;
@@ -62,8 +63,36 @@ public class Card implements Entity {
         return events;
     }
 
+    public CardId getId() {
+        return id;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
     public CardNumber getNumber() {
         return number;
+    }
+
+    public CardVerificationCode getCvc() {
+        return cvc;
+    }
+
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+
+    public Money getBalance() {
+        return balance;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
 }

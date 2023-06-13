@@ -1,6 +1,6 @@
 package pl.training.payments;
 
-import org.aopalliance.aop.Advice;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.ClassFilter;
 import org.springframework.aop.MethodMatcher;
@@ -10,6 +10,7 @@ import org.springframework.aop.support.ExpressionPointcut;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import pl.training.payments.aop.CachingProxy;
 import pl.training.payments.application.input.commands.ChargeCardCommandHandler;
@@ -22,6 +23,7 @@ import pl.training.payments.domain.CardRepository;
 
 import java.lang.reflect.Method;
 
+@EnableJpaRepositories
 @EnableTransactionManagement//(order = Integer.MIN_VALUE)
 @EnableAspectJAutoProxy
 @Configuration

@@ -13,7 +13,7 @@
     </parent>
 
     <groupId>pl.training</groupId>
-    <artifactId>payments-service</artifactId>
+    <artifactId>payments-infrastructure</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>

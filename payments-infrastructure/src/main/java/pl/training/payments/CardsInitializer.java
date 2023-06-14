@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Transactional
-//@Component
+@Component
 @RequiredArgsConstructor
 public class CardsInitializer implements ApplicationRunner {
 
@@ -23,7 +23,7 @@ public class CardsInitializer implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         var expirationDate =  LocalDate.now().plus(10, DAYS);
-        var card = cardFactory.create("Jan Kowalski", "1234567890123456", "133", expirationDate, 10_000);
+        var card = cardFactory.create("1234567890123456", expirationDate, 10_000);
         cardRepository.save(card);
     }
 

@@ -23,9 +23,3 @@ Accept: application/json
 GET http://localhost:8080/cards/1234567890123456/transactions
 Content-Type: application/json
 Accept: application/json
-
-###
-
-GET http://localhost:8080/cards/test/33
-Content-Type: application/json
-Accept: application/json

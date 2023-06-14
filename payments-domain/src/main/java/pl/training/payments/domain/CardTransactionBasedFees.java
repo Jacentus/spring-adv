@@ -2,11 +2,12 @@ package pl.training.payments.domain;
 
 import pl.training.payments.domain.common.Policy;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CardTransactionBasedFees implements Policy<Money> {
 
-    private static final Money SINGLE_TRANSACTION_FEE = Money.of(0.1);
+    private static final Money SINGLE_TRANSACTION_FEE = Money.of(BigDecimal.valueOf(0.1));
 
     private final List<CardTransaction> transactions;
 

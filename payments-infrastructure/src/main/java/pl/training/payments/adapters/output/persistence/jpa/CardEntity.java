@@ -7,7 +7,6 @@ import org.hibernate.Hibernate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @NamedEntityGraph(name = CardEntity.WITH_TRANSACTIONS, attributeNodes = @NamedAttributeNode(value = "transactions"))
@@ -22,11 +21,8 @@ public class CardEntity {
 
     @Id
     private String id;
-    private String owner;
     @Column(name = "CARD_NUMBER", unique = true)
     private String number;
-    @Column(name = "VERIFICATION_CODE")
-    private String verificationCode;
     private LocalDate expirationDate;
     private BigDecimal balance;
     @Column(name = "CURRENCY_CODE")
@@ -35,9 +31,6 @@ public class CardEntity {
 
     /*@OneToMany(fetch = FetchType.EAGER)
     private List<TransactionEntity> transactions;*/
-
-    @Version
-    private long version;
 
     @Override
     public boolean equals(Object other) {

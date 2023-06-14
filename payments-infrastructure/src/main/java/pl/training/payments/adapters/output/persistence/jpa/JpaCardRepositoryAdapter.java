@@ -1,6 +1,7 @@
 package pl.training.payments.adapters.output.persistence.jpa;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.training.payments.common.Adapter;
@@ -10,6 +11,7 @@ import pl.training.payments.domain.CardRepository;
 
 import java.util.Optional;
 
+@Primary
 @Transactional(propagation = Propagation.MANDATORY)
 @Adapter
 @RequiredArgsConstructor

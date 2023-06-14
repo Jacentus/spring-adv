@@ -1,6 +1,5 @@
 package pl.training.payments.adapters.output.persistence.jpa;
 
-import jakarta.persistence.LockModeType;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,13 +13,10 @@ import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphType.FETCH;
-import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphType.LOAD;
-import static pl.training.payments.adapters.output.persistence.jpa.CardEntity.WITH_TRANSACTIONS;
 
 public interface JpaCardRepository extends JpaRepository<CardEntity, String>, JpaCardRepositoryExtensions, JpaSpecificationExecutor<CardEntity> {   // Repository<CardEntity, String>, CrudRepository<CardEntity, String>
 
-
-    @Lock(LockModeType.WRITE)
+   // @Lock(LockModeType.WRITE)
     Optional<CardEntity> getByNumber(String numer);
 
     @Query("select new pl.training.payments.adapters.output.persistence.jpa.BaseCardView(c.number, c.balance, c.currencyCode) from Card c where c.balance >= :value")

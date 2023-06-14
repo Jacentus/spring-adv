@@ -15,10 +15,8 @@ public class CardDocument {
 
     @Id
     private String id;
-    private String owner;
     @Indexed(unique = true)
     private String number;
-    private String verificationCode;
     private LocalDate expirationDate;
     private BigDecimal balance;
     private String currencyCode;

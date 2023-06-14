@@ -22,8 +22,7 @@ public abstract class MongoCardRepositoryMapper {
 
     @Mapping(source = "id.value", target = "id")
     @Mapping(source = "number.value", target = "number")
-    @Mapping(source = "cvc.value", target = "verificationCode")
-    @Mapping(source = "balance.amount.value", target = "balance")
+    @Mapping(source = "balance.amount", target = "balance")
     @Mapping(source = "balance.currency.currencyCode", target = "currencyCode")
     abstract CardDocument toDocument(Card card);
 
@@ -31,8 +30,8 @@ public abstract class MongoCardRepositoryMapper {
     abstract List<CardTransactionDocument> toDocument(List<CardTransaction> transactions);
 
     public Card toDomain(CardDocument cardEntity) {
-        return cardFactory.create(cardEntity.getId(), cardEntity.getOwner(), cardEntity.getNumber(), cardEntity.getVerificationCode(),
-                cardEntity.getExpirationDate(), cardEntity.getBalance().doubleValue(), cardEntity.getCurrencyCode(),
+        return cardFactory.create(cardEntity.getId(), cardEntity.getNumber(), cardEntity.getExpirationDate(),
+                cardEntity.getBalance().doubleValue(), cardEntity.getCurrencyCode(),
                 cardEntity.getTransactions().stream().map(this::toDomain).collect(Collectors.toList()));
     }
 

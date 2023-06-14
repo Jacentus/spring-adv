@@ -33,8 +33,7 @@ public abstract class JpaCardRepositoryMapper {
 
     @Mapping(source = "id.value", target = "id")
     @Mapping(source = "number.value", target = "number")
-    @Mapping(source = "cvc.value", target = "verificationCode")
-    @Mapping(source = "balance.amount.value", target = "balance")
+    @Mapping(source = "balance.amount", target = "balance")
     @Mapping(source = "balance.currency.currencyCode", target = "currencyCode")
     abstract CardEntity toEntity(Card card);
 
@@ -45,8 +44,8 @@ public abstract class JpaCardRepositoryMapper {
 
     @SneakyThrows
     public Card toDomain(CardEntity cardEntity) {
-        return cardFactory.create(cardEntity.getId(), cardEntity.getOwner(), cardEntity.getNumber(), cardEntity.getVerificationCode(),
-                cardEntity.getExpirationDate(), cardEntity.getBalance().doubleValue(), cardEntity.getCurrencyCode(),
+        return cardFactory.create(cardEntity.getId(), cardEntity.getNumber(), cardEntity.getExpirationDate(),
+                cardEntity.getBalance().doubleValue(), cardEntity.getCurrencyCode(),
                 jsonMapper.readValue(cardEntity.getTransactions(), transactionsType));
     }
 

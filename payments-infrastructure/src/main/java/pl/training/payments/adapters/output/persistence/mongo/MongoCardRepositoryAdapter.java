@@ -1,6 +1,7 @@
 package pl.training.payments.adapters.output.persistence.mongo;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import pl.training.payments.common.Adapter;
 import pl.training.payments.domain.Card;
 import pl.training.payments.domain.CardNumber;
@@ -8,6 +9,7 @@ import pl.training.payments.domain.CardRepository;
 
 import java.util.Optional;
 
+@Primary
 @Adapter
 @RequiredArgsConstructor
 public class MongoCardRepositoryAdapter implements CardRepository {

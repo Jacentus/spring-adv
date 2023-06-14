@@ -27,6 +27,7 @@ public class CardEntity {
     private BigDecimal balance;
     @Column(name = "CURRENCY_CODE")
     private String currencyCode;
+    @Column(length = 10_000)
     private String transactions;
 
     /*@OneToMany(fetch = FetchType.EAGER)

@@ -1,4 +1,4 @@
-package pl.training.payments.common;
+package pl.training.payments.adapters.output.persistence.jpa;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,12 @@ import pl.training.payments.domain.CardFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static org.springframework.data.domain.Sort.Direction.ASC;
+import static pl.training.payments.adapters.output.persistence.jpa.SearchCriteria.Matcher.EQUAL;
+import static pl.training.payments.adapters.output.persistence.jpa.SearchCriteria.Matcher.START_WITH;
 
 @Transactional
 @Component
@@ -43,7 +46,7 @@ public class JpaExamples implements ApplicationRunner {
 
         //log.info("Cards with zero balance: " +
 
-        var exampleCardEntity = new CardEntity();
+        /*var exampleCardEntity = new CardEntity();
         exampleCardEntity.setBalance(BigDecimal.valueOf(10_000));
         var matcher = ExampleMatcher.matching()
                 .withIgnorePaths("version", "transactions")
@@ -51,7 +54,16 @@ public class JpaExamples implements ApplicationRunner {
                 .withIgnoreNullValues();
         var example = Example.of(exampleCardEntity, matcher);
         cardRepository.findAll(example)
-              .forEach(view -> log.info(view.getNumber() + ": " + view.getBalance()));
+              .forEach(view -> log.info(view.getNumber() + ": " + view.getBalance()));*/
+
+
+        var specification = new CardSpecification(Set.of(
+           new SearchCriteria("currencyCode", "PLN", START_WITH),
+           new SearchCriteria("balance", "10000", EQUAL)
+        ));
+
+        cardRepository.findAll(specification)
+                .forEach(view -> log.info(view.getNumber() + ": " + view.getBalance()));
     }
 
 }

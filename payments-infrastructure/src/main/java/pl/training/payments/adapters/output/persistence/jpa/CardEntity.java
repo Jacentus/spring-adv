@@ -7,8 +7,10 @@ import org.hibernate.Hibernate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
+@NamedEntityGraph(name = CardEntity.WITH_TRANSACTIONS, attributeNodes = @NamedAttributeNode(value = "transactions"))
 @NamedQuery(name = CardEntity.GET_WITH_ZERO_BALANCE, query = "select c from Card c where c.balance = 0")
 @Entity(name = "Card")
 @Getter
@@ -16,6 +18,7 @@ import java.util.Objects;
 public class CardEntity {
 
     public static final String GET_WITH_ZERO_BALANCE = "CardEntity.GET_WITH_ZERO_BALANCE";
+    public static final String WITH_TRANSACTIONS = "CardEntity.WITH_TRANSACTIONS";
 
     @Id
     private String id;
@@ -29,6 +32,10 @@ public class CardEntity {
     @Column(name = "CURRENCY_CODE")
     private String currencyCode;
     private String transactions;
+
+    /*@OneToMany(fetch = FetchType.EAGER)
+    private List<TransactionEntity> transactions;*/
+
     @Version
     private long version;
 

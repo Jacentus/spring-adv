@@ -16,7 +16,7 @@ import static pl.training.payments.application.annotations.ExecutionTime.TimeUni
 import static pl.training.payments.domain.CardTransactionType.WITHDRAW;
 
 // w przyszłości trzeba będzie rozdzielić tą klasę na wiele serwiswów/use casów
-// @Atomic
+@Atomic
 @RequiredArgsConstructor
 public class PaymentService {
 
@@ -27,7 +27,6 @@ public class PaymentService {
     // @Retry
     // @ExecutionTime(timeUnit = MS)
     // @Loggable
-    @Atomic
     public void chargeCard(CardNumber number, Money amount) {
         var card = cardRepository.getByNumber(number)
                 .orElseThrow(CardNotFoundException::new);

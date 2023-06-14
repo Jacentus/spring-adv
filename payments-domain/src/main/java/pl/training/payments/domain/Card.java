@@ -4,8 +4,9 @@ import pl.training.payments.domain.common.Entity;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
+import java.util.function.Consumer;
 
 import static java.util.Collections.unmodifiableList;
 import static pl.training.payments.domain.CardTransactionType.FEE;
@@ -13,23 +14,18 @@ import static pl.training.payments.domain.CardTransactionType.FEE;
 public class Card implements Entity {
 
     private CardId id;
-    private String owner;
     private CardNumber number;
-    private CardVerificationCode cvc;
     private LocalDate expirationDate;
     private Money balance;
     private List<CardTransaction> transactions;
-    private Queue<CardCharged> events;
+    private List<Consumer<CardCharged>> eventListeners = new ArrayList<>();
 
-    public Card(CardId id, String owner, CardNumber number, CardVerificationCode cvc, LocalDate expirationDate, Money balance, List<CardTransaction> transactions, Queue<CardCharged> events) {
+    public Card(CardId id, CardNumber number, LocalDate expirationDate, Money balance, List<CardTransaction> transactions) {
         this.id = id;
-        this.owner = owner;
         this.number = number;
-        this.cvc = cvc;
         this.expirationDate = expirationDate;
         this.balance = balance;
         this.transactions = transactions;
-        this.events = events;
     }
 
     public void addTransaction(CardTransaction transaction) {
@@ -39,6 +35,9 @@ public class Card implements Entity {
         if (transaction.isWithdraw() && !HasSufficientFunds.create(balance, transaction).check()) {
             throw new InsufficientFundsException();
         }
+        balance = switch (transaction.type()) {
+            case FEE, WITHDRAW -> balance.subtract(transaction.money());
+        };
         transactions.add(transaction);
         publishCardChargeEvent(transaction);
     }
@@ -49,7 +48,7 @@ public class Card implements Entity {
 
     private void publishCardChargeEvent(CardTransaction transaction) {
         var cardChargedEvent = new CardCharged(number, transaction);
-        events.add(cardChargedEvent);
+        eventListeners.forEach(consumer -> consumer.accept(cardChargedEvent));
     }
 
     public void chargeFees(ZonedDateTime timestamp) {
@@ -58,8 +57,8 @@ public class Card implements Entity {
         addTransaction(transaction);
     }
 
-    public Queue<CardCharged> getEvents() {
-        return events;
+    public void addEventsListener(Consumer<CardCharged> consumer) {
+        eventListeners.add(consumer);
     }
 
     public CardNumber getNumber() {

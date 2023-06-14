@@ -22,7 +22,7 @@ import static pl.training.payments.adapters.output.persistence.jpa.SearchCriteri
 import static pl.training.payments.adapters.output.persistence.jpa.SearchCriteria.Matcher.START_WITH;
 
 @Transactional
-@Component
+// @Component
 @RequiredArgsConstructor
 @Log
 public class JpaExamples implements ApplicationRunner {

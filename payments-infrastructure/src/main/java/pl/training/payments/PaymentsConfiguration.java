@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import pl.training.payments.aop.CachingProxy;
 import pl.training.payments.application.input.commands.ChargeCardCommandHandler;
@@ -23,6 +24,7 @@ import pl.training.payments.domain.CardRepository;
 
 import java.lang.reflect.Method;
 
+@EnableMongoRepositories
 @EnableJpaRepositories//(repositoryImplementationPostfix = "Custom")
 @EnableTransactionManagement//(order = Integer.MIN_VALUE)
 @EnableAspectJAutoProxy

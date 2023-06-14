@@ -43,10 +43,10 @@ public class PaymentConfiguration {
     }
 
     @Bean
-    public HandlerMapping handlerMapping(WebSocketRatingSourceAdapter adapter) {
+    public HandlerMapping handlerMapping(WebSocketRatingSourceAdapter handler) {
         var mapper = new SimpleUrlHandlerMapping();
         mapper.setOrder(1);
-        mapper.setUrlMap(Map.of(RATINGS, adapter));
+        mapper.setUrlMap(Map.of(RATINGS, handler));
         return mapper;
     }
 

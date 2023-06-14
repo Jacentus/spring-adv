@@ -65,15 +65,12 @@ public class Main {
             compositeDisposable.dispose();
         }));
 
-
-
         var disposable = ObservableInputStream.fromInputStream(System.in)
                 .debounce(5, TimeUnit.SECONDS)
                 .flatMap(this::zipRequests)
                 .subscribe(result -> log.info(result.toString()), throwable -> log.info(throwable.toString()));
 
         compositeDisposable.add(disposable);
-
 
        /* getRuntime().addShutdownHook(new Thread(() -> {
             log.info("Disposing disposables");

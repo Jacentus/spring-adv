@@ -21,6 +21,7 @@
         <module>payments-domain</module>
         <module>payments-application</module>
         <module>payments-infrastructure</module>
+        <module>reactive-payments</module>
         <module>search</module>
     </modules>
 

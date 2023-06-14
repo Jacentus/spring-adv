@@ -26,4 +26,5 @@ public class CardsInitializer implements ApplicationRunner {
         var card = cardFactory.create("Jan Kowalski", "1234567890123456", "133", expirationDate, 10_000);
         cardRepository.save(card);
     }
+
 }

@@ -9,7 +9,9 @@ import pl.training.payments.domain.CardTransaction;
 
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+import static org.mapstruct.ap.internal.gem.MappingConstantsGem.ComponentModelGem.SPRING;
+
+@Mapper(componentModel = SPRING)
 public abstract class MongoCardRepositoryMapper {
 
     private final CardFactory cardFactory = new CardFactory();

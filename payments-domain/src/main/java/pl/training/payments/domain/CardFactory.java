@@ -7,10 +7,10 @@ import java.util.UUID;
 
 public class CardFactory {
 
-    public Card create(String cardNumber, LocalDate expiration, double balance) {
+    public Card create(String number, LocalDate expiration, double balance) {
         var cardId = new CardId(UUID.randomUUID().toString());
-        var number = new CardNumber(cardNumber);
+        var cardNumber = new CardNumber(number);
         var cardBalance = Money.of(BigDecimal.valueOf(balance));
-        return new Card(cardId, number, expiration, cardBalance, new ArrayList<>());
+        return new Card(cardId, cardNumber, expiration, cardBalance, new ArrayList<>());
     }
 }

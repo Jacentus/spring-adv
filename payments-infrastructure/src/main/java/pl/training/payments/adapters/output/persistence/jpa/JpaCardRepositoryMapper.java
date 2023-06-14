@@ -15,8 +15,9 @@ import pl.training.payments.domain.CardTransaction;
 import java.util.List;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = SPRING)
 public abstract class JpaCardRepositoryMapper {
 
     private static final TypeReference<List<CardTransaction>> transactionsType = new TypeReference<>() {};

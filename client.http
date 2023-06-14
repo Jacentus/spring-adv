@@ -29,3 +29,16 @@ Accept: application/json
 GET http://localhost:8080/cards/test/33
 Content-Type: application/json
 Accept: application/json
+
+###
+
+POST http://localhost:8081/payments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "value": 200,
+  "currencyCode": "PLN"
+}
+
+

@@ -10,6 +10,7 @@ public class Payment {
 
     private static final String CONFIRMED_STATUS = "CONFIRMED";
 
+    @With
     String id;
     BigDecimal value;
     String currencyCode;

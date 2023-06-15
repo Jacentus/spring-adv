@@ -10,9 +10,10 @@ import java.util.Random;
 @Component
 public class RatingSource {
 
+    private static final double MAX_RATING_FLUCTUACTION = 0.5;
+    private static final int RATING_UPDATE_INTERVAL_IN_SECONDS = 3;
+
     private final Random random = new Random();
-    private final double MAX_RATING_FLUCTUACTION = 0.5;
-    private final int RATING_UPDATE_INTERVAL_IN_SECONDS = 3;
 
     public Flux<BigDecimal> getExchangeRates() {
         return Flux.interval(Duration.ofSeconds(RATING_UPDATE_INTERVAL_IN_SECONDS))

@@ -4,6 +4,8 @@ spring:
   mail:
     host: localhost
     port: 10025
+  messages:
+    basename: messages # default
 #    host: smtp.gmail.com
 #    port: 587
 #    username: username

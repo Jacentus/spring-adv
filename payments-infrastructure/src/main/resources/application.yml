@@ -31,4 +31,5 @@ logging:
     pl.training.payments.adapters.output.time.remote: DEBUG
 loggerOrder: 10000
 dateTimeApi: http://worldtimeapi.org/api/timezone/Europe/Warsaw
+processedPaymentsApi: http://localhost:8081/payments/processed
 tokenApi: 123

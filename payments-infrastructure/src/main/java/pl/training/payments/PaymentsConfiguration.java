@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import pl.training.payments.adapters.output.time.remote.RestTemplateTokenInterceptor;
 import pl.training.payments.application.input.commands.ChargeCardCommandHandler;
 import pl.training.payments.application.input.commands.ChargeCardFeesCommandHandler;
@@ -53,6 +54,13 @@ public class PaymentsConfiguration {
     public RestTemplate restTemplate(@Value("${tokenApi}")  String tokenApi) {
         return new RestTemplateBuilder()
                 .additionalInterceptors(List.of(new RestTemplateTokenInterceptor(tokenApi)))
+                .build();
+    }
+
+    @Bean
+    public WebClient webClient() {
+        return WebClient.builder()
+                ///.baseUrl("http://localhost:8081")
                 .build();
     }
 

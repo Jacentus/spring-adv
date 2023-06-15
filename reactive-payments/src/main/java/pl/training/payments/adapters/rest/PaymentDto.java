@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
 @Data
 public class PaymentDto {
@@ -13,7 +13,7 @@ public class PaymentDto {
     private String id;
     private BigDecimal value;
     private String currencyCode;
-    @JsonProperty(access = WRITE_ONLY)
+    @JsonProperty(access = READ_ONLY)
     private String status;
 
 }

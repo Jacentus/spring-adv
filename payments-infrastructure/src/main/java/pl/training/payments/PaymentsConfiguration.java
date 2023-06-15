@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 import pl.training.payments.adapters.output.time.remote.RestTemplateTokenInterceptor;
 import pl.training.payments.application.input.commands.ChargeCardCommandHandler;
 import pl.training.payments.application.input.commands.ChargeCardFeesCommandHandler;
@@ -60,7 +61,6 @@ public class PaymentsConfiguration {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                ///.baseUrl("http://localhost:8081")
                 .build();
     }
 

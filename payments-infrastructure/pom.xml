@@ -73,10 +73,7 @@
         <!--apple mx fix-->
         <dependency>
             <groupId>io.netty</groupId>
-            <artifactId>netty-resolver-dns-native-macos</artifactId>
-            <scope>runtime</scope>
-            <classifier>osx-x86_64</classifier>
-            <version>4.1.59.Final</version>
+            <artifactId>netty-all</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>

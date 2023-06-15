@@ -1,2 +1,17 @@
+spring:
+  thymeleaf:
+    enabled: false
+  mail:
+    host: localhost
+    port: 10025
+#    host: smtp.gmail.com
+#    port: 587
+#    username: username
+#    password: password
+#    properties:
+#      mail.smtp.auth: true
+#      mail.smtp.starttls.enable: true
+#      mail.smtp.ssl.trust: smtp.gmail.com
+languages: pl
 main-room: /main-room
 private-rooms-prefix: /private-rooms/

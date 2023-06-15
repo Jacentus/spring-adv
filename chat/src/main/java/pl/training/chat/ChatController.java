@@ -19,6 +19,7 @@ public class ChatController {
 
     private final TimeProvider timeProvider;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final ChatEventEmitter chatEventEmitter;
 
     @Value("${main-room}")
     @Setter
@@ -35,6 +36,7 @@ public class ChatController {
 
         var response = chatMessageDto.withTimestamp(timeProvider.getTime());
         log.info("New message: " + chatMessageDto);
+        chatEventEmitter.emit(chatMessageDto);
         if (chatMessageDto.isBroadcast()) {
             simpMessagingTemplate.convertAndSend(mainRoom, response);
         } else {

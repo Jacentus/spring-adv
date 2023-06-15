@@ -23,6 +23,7 @@
         <module>payments-infrastructure</module>
         <module>reactive-payments</module>
         <module>search</module>
+        <module>chat</module>
     </modules>
 
 </project>

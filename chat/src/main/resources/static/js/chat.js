@@ -27,6 +27,7 @@ $(() => {
 
     function onConnected() {
         stompClient.subscribe('/main-room', onMessage);
+        stompClient.subscribe('/private-rooms/' + getUser(), onMessage);
         updateView(true);
     }
 
@@ -41,9 +42,10 @@ $(() => {
     }
 
     function sendMessage() {
+        const recipients = $('#recipient').val().split(',').filter(value => value.length > 0);
         const message = {
           sender: getUser(),
-          recipients: $('#recipient').val().split(','),
+          recipients,
           text: $('#message').val()
         };
         stompClient.send('/ws/chat', {}, JSON.stringify(message));

@@ -16,3 +16,9 @@ services:
       MONGO_INITDB_ROOT_USERNAME: "admin"
       MONGO_INITDB_ROOT_PASSWORD: "admin"
       MONGO_INITDB_ROOT_DATABASE: "payments"
+  mail:
+    image: djfarrelly/maildev
+    command: home/node/bin/maildev --web 8082 --smtp 10025
+    ports:
+      - "8082:8082"
+      - "10025:10025"

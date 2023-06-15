@@ -18,7 +18,17 @@ spring:
     mongodb:
       uri: mongodb://admin:admin@localhost:27017/payments?authSource=admin&authMechanism=SCRAM-SHA-256
       auto-index-creation: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          dateTimeApi:
+            logger-level: headers
 logging:
   level:
     org.springframework.data.mongodb.repository.query: DEBUG
+    org.springframework.web.client.RestTemplate: DEBUG
+    pl.training.payments.adapters.output.time.remote: DEBUG
 loggerOrder: 10000
+dateTimeApi: http://worldtimeapi.org/api/timezone/Europe/Warsaw
+tokenApi: 123

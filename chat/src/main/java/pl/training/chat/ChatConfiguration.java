@@ -1,17 +1,17 @@
 package pl.training.chat;
 
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.client.config.ClientConfig;
+import com.hazelcast.core.HazelcastInstance;
 import jakarta.jms.ConnectionFactory;
 import jakarta.jms.JMSException;
-import lombok.extern.java.Log;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
@@ -133,10 +133,49 @@ public class ChatConfiguration implements WebSocketMessageBrokerConfigurer, Asyn
         return container;
     }
 
-    @Bean
+    /*@Bean
     public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("calculations");
+        return new TransactionAwareCacheManagerProxy(new ConcurrentMapCacheManager("calculations"));
+    }*/
+
+    /*@Bean
+    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        var config= RedisCacheConfiguration.defaultCacheConfig();
+        config.usePrefix();
+        return RedisCacheManager.builder(redisConnectionFactory)
+                .cacheDefaults(config)
+                .build();
+    }*/
+
+    /*@Bean
+    public HazelcastInstance hazelcastInstance() {
+        var config = new Config();
+        config.getNetworkConfig()
+                .setPortAutoIncrement(true)
+                .getJoin()
+                .getMulticastConfig()
+                .setMulticastPort(20_000)
+                .setEnabled(true);
+        return Hazelcast.newHazelcastInstance(config);
+    }*/
+
+    @Bean
+    public HazelcastInstance hazelcastInstance() {
+        var config = new ClientConfig();
+        config.getNetworkConfig()
+                .addAddress("localhost:5701");
+        return HazelcastClient.newHazelcastClient(config);
     }
+
+    /*@Bean
+    public CacheManager cacheManager(HazelcastInstance customHazelcastInstance) {
+        //var config = new ClientConfig();
+        return new HazelcastCacheManager(customHazelcastInstance);
+    }*/
+
+    // https://docs.hazelcast.com/tutorials/spring-session-hazelcast
+
+
 
 }
 

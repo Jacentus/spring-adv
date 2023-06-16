@@ -40,11 +40,12 @@ services:
     ports:
       - "6379:6379"
   hazelcast:
-    image: hazelcast/hazelcast
+    image: hazelcast/hazelcast:5.2.5-SNAPSHOT
     ports:
       - "5701:5701"
     environment:
       - HZ_CLUSTERNAME=training
+      - HZ_USERCODEDEPLOYMENT_ENABLED=true
   hazelcast-manager:
     image: hazelcast/management-center
     ports:

@@ -30,11 +30,14 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.session.MapSession;
+import org.springframework.session.Session;
 import org.springframework.session.hazelcast.config.annotation.SpringSessionHazelcastInstance;
 import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.session.hazelcast.SessionUpdateEntryProcessor;
 
 import java.util.HashMap;
 import java.util.concurrent.Executor;
@@ -169,6 +172,9 @@ public class ChatConfiguration implements WebSocketMessageBrokerConfigurer, Asyn
         config.setClusterName("training");
         config.getNetworkConfig()
                 .addAddress("localhost:5701");
+
+        config.getUserCodeDeploymentConfig().setEnabled(true).addClass(Session.class)
+                .addClass(MapSession.class).addClass(SessionUpdateEntryProcessor.class);
         return HazelcastClient.newHazelcastClient(config);
     }
 

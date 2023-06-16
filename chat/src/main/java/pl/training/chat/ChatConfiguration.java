@@ -173,8 +173,11 @@ public class ChatConfiguration implements WebSocketMessageBrokerConfigurer, Asyn
         config.getNetworkConfig()
                 .addAddress("localhost:5701");
 
-        config.getUserCodeDeploymentConfig().setEnabled(true).addClass(Session.class)
-                .addClass(MapSession.class).addClass(SessionUpdateEntryProcessor.class);
+        config.getUserCodeDeploymentConfig()
+                .setEnabled(true)
+                .addClass(Session.class)
+                .addClass(MapSession.class)
+                .addClass(SessionUpdateEntryProcessor.class);
         return HazelcastClient.newHazelcastClient(config);
     }
 

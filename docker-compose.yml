@@ -40,7 +40,7 @@ services:
     ports:
       - "6379:6379"
   hazelcast:
-    image: hazelcast/hazelcast:5.2.5-SNAPSHOT
+    image: hazelcast/hazelcast
     ports:
       - "5701:5701"
     environment:

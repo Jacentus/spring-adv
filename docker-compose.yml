@@ -39,7 +39,7 @@ services:
     image: redis
     ports:
       - "6379:6379"
-  hazelcast:
-    image: hazelcast/hazelcast
-    ports:
-      - "5701:5701"
+#  hazelcast:
+#    image: hazelcast/hazelcast
+#    ports:
+#      - "5701:5701"

@@ -9,6 +9,9 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
@@ -35,6 +38,7 @@ import java.util.HashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+@EnableCaching(order = 10_000)
 @EnableScheduling
 @EnableAsync
 @EnableWebSocketMessageBroker
@@ -127,6 +131,11 @@ public class ChatConfiguration implements WebSocketMessageBrokerConfigurer, Asyn
         container.setConcurrency("1-10");
         container.setPubSubDomain(true); // topic
         return container;
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("calculations");
     }
 
 }

@@ -1,6 +1,6 @@
 spring:
   thymeleaf:
-    enabled: false
+    enabled: true
   mail:
     host: localhost
     port: 10025

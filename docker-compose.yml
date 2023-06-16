@@ -43,6 +43,8 @@ services:
     image: hazelcast/hazelcast
     ports:
       - "5701:5701"
+    environment:
+      - HZ_CLUSTERNAME=training
   hazelcast-manager:
     image: hazelcast/management-center
     ports:

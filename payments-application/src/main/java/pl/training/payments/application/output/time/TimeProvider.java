@@ -4,6 +4,6 @@ import java.time.ZonedDateTime;
 
 public interface TimeProvider {
 
-    ZonedDateTime getTimeStamp();
+    ZonedDateTime getTimestamp();
 
 }

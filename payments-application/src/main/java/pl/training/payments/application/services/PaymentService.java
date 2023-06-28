@@ -1,7 +1,6 @@
 package pl.training.payments.application.services;
 
 import lombok.RequiredArgsConstructor;
-import pl.training.payments.application.annotations.Atomic;
 import pl.training.payments.application.output.events.CardChargedApplicationEvent;
 import pl.training.payments.application.output.events.CardEventsPublisher;
 import pl.training.payments.application.output.time.TimeProvider;
@@ -10,10 +9,10 @@ import pl.training.payments.domain.*;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static pl.training.payments.domain.CardTransactionType.FEE;
 import static pl.training.payments.domain.CardTransactionType.WITHDRAW;
 
 // w przyszłości trzeba będzie rozdzielić tą klasę na wiele serwiswów/use casów
-@Atomic
 @RequiredArgsConstructor
 public class PaymentService {
 
@@ -21,30 +20,41 @@ public class PaymentService {
     private final CardEventsPublisher cardEventsPublisher;
     private final TimeProvider timeProvider;
 
-    // @Lock
-    // @ExecutionTime
-    //@Retry
     public void chargeCard(CardNumber number, Money amount) {
-        var card = cardRepository.getByNumber(number)
-                .orElseThrow(CardNotFoundException::new);
-        card.addEventsListener(createCardChargedEventListener());
-        var transaction = new CardTransaction(timeProvider.getTimeStamp(), amount, WITHDRAW);
+        processOperation(number, card -> {
+            card.addEventsListener(createCardChargedEventListener());
+            return new CardTransaction(timeProvider.getTimestamp(), amount, WITHDRAW);
+        });
+    }
+
+    public List<CardTransaction> getTransactions(CardNumber number) {
+        return getCard(number).getTransactions();
+    }
+
+    public void chargeFees(CardNumber number) {
+        processOperation(number, card -> {
+            var fees = new CardTransactionBasedFees(card.getTransactions())
+                    .execute();
+            return new CardTransaction(timeProvider.getTimestamp(), fees, FEE);
+        });
+    }
+
+    private void processOperation(CardNumber number, Operation operation) {
+        var card = getCard(number);
+        var transaction = operation.execute(card);
         card.addTransaction(transaction);
         cardRepository.save(card);
     }
 
-    public List<CardTransaction> getTransactions(CardNumber number) {
-        return cardRepository.getByNumber(number)
-                .map(Card::getTransactions)
-                .orElseThrow(CardNotFoundException::new);
+    private interface Operation {
+
+        CardTransaction execute(Card card);
+
     }
 
-    public void chargeFees(CardNumber number) {
-        var card = cardRepository.getByNumber(number)
+    private Card getCard(CardNumber number) {
+        return cardRepository.getByNumber(number)
                 .orElseThrow(CardNotFoundException::new);
-        card.addEventsListener(createCardChargedEventListener());
-        card.chargeFees(timeProvider.getTimeStamp());
-        cardRepository.save(card);
     }
 
     private Consumer<CardCharged> createCardChargedEventListener() {

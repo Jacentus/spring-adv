@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 public class LocalTimeProvider implements TimeProvider {
 
     @Override
-    public ZonedDateTime getTimeStamp() {
+    public ZonedDateTime getTimestamp() {
         return ZonedDateTime.now();
     }
 

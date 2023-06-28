@@ -3,13 +3,11 @@ package pl.training.payments.domain;
 import pl.training.payments.domain.common.Entity;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 import static java.util.Collections.unmodifiableList;
-import static pl.training.payments.domain.CardTransactionType.FEE;
 
 public class Card implements Entity {
 
@@ -51,12 +49,6 @@ public class Card implements Entity {
         eventListeners.forEach(consumer -> consumer.accept(cardChargedEvent));
     }
 
-    public void chargeFees(ZonedDateTime timestamp) {
-        var fees = new CardTransactionBasedFees(transactions).execute();
-        var transaction = new CardTransaction(timestamp, fees, FEE);
-        addTransaction(transaction);
-    }
-
     public void addEventsListener(Consumer<CardCharged> consumer) {
         eventListeners.add(consumer);
     }
@@ -65,16 +57,16 @@ public class Card implements Entity {
         return id;
     }
 
-    public CardNumber getNumber() {
-        return number;
-    }
-
     public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
     public Money getBalance() {
         return balance;
+    }
+
+    public CardNumber getNumber() {
+        return number;
     }
 
 }

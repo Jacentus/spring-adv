@@ -20,7 +20,7 @@ public class RemoteTimeProviderAdapter implements TimeProvider {
 
     @Retry
     @Override
-    public ZonedDateTime getTimeStamp() {
+    public ZonedDateTime getTimestamp() {
         try {
             return timeProvider.getDateTime()
                     .map(mapper::toDomain)
